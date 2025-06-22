@@ -202,25 +202,33 @@ function typeWriter(element, html, speed = 100) {
     
     let currentIndex = 0;
     const totalLength = fullText.length;
+    const spanStartIndex = fullText.indexOf(spanText);
+    const spanEndIndex = spanStartIndex + spanText.length;
     
     function type() {
         if (currentIndex < totalLength) {
             currentIndex++;
             
-            // Calculate what should be visible
-            let visibleText = fullText.substring(0, currentIndex);
+            // Build the HTML with proper highlighting
+            let htmlContent = '';
             
-            // Check if we've reached the span text
-            if (visibleText.includes(spanText)) {
-                const beforeSpanVisible = visibleText.substring(0, visibleText.indexOf(spanText));
-                const spanVisible = visibleText.substring(visibleText.indexOf(spanText), visibleText.indexOf(spanText) + spanText.length);
-                const afterSpanVisible = visibleText.substring(visibleText.indexOf(spanText) + spanText.length);
-                
-                element.innerHTML = `${beforeSpanVisible}<span class="highlight">${spanVisible}</span>${afterSpanVisible}`;
+            // Add text before the span
+            if (currentIndex <= spanStartIndex) {
+                htmlContent = fullText.substring(0, currentIndex);
             } else {
-                element.innerHTML = visibleText;
+                htmlContent = beforeSpan;
+                
+                // Add the span text with highlighting
+                const spanTextTyped = fullText.substring(spanStartIndex, Math.min(currentIndex, spanEndIndex));
+                htmlContent += `<span class="highlight">${spanTextTyped}</span>`;
+                
+                // Add text after the span (if we've finished typing the span)
+                if (currentIndex > spanEndIndex) {
+                    htmlContent += fullText.substring(spanEndIndex, currentIndex);
+                }
             }
             
+            element.innerHTML = htmlContent;
             setTimeout(type, speed);
         }
     }
