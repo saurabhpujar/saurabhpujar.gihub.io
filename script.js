@@ -183,18 +183,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Typing effect for hero title
-function typeWriter(element, text, speed = 100) {
+function typeWriter(element, html, speed = 100) {
     let i = 0;
-    element.innerHTML = '';
-    
+    let isTag = false;
+    let text = '';
+
     function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
+        if (i < html.length) {
+            if (html[i] === '<') isTag = true;
+            text += html[i];
+            if (html[i] === '>') isTag = false;
+            element.innerHTML = text;
             i++;
-            setTimeout(type, speed);
+            setTimeout(type, isTag ? 0 : speed);
         }
     }
-    
     type();
 }
 
@@ -202,9 +205,9 @@ function typeWriter(element, text, speed = 100) {
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        const originalText = heroTitle.innerHTML;
+        const originalHTML = heroTitle.innerHTML;
         setTimeout(() => {
-            typeWriter(heroTitle, originalText, 50);
+            typeWriter(heroTitle, originalHTML, 50);
         }, 500);
     }
 });
