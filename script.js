@@ -229,10 +229,11 @@ function typeWriter(element, html, speed = 100) {
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        const originalHTML = heroTitle.innerHTML;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalHTML, 50);
-        }, 500);
+        // Temporarily disable typing effect to preserve HTML styling
+        // const originalHTML = heroTitle.innerHTML;
+        // setTimeout(() => {
+        //     typeWriter(heroTitle, originalHTML, 50);
+        // }, 500);
     }
 });
 
