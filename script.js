@@ -184,20 +184,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Typing effect for hero title
 function typeWriter(element, html, speed = 100) {
-    let i = 0;
-    let isTag = false;
-    let text = '';
-
+    // Create a temporary element to parse the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    
+    // Get the text content (without HTML tags)
+    const textContent = tempDiv.textContent || tempDiv.innerText;
+    
+    // Find the span element to preserve
+    const spanElement = element.querySelector('.highlight');
+    const spanText = spanElement ? spanElement.textContent : '';
+    
+    // Clear the element
+    element.innerHTML = '';
+    
+    let currentText = '';
+    let textIndex = 0;
+    
     function type() {
-        if (i < html.length) {
-            if (html[i] === '<') isTag = true;
-            text += html[i];
-            if (html[i] === '>') isTag = false;
-            element.innerHTML = text;
-            i++;
-            setTimeout(type, isTag ? 0 : speed);
+        if (textIndex < textContent.length) {
+            currentText += textContent[textIndex];
+            
+            // Check if we've reached the span text
+            if (currentText.includes(spanText) && spanElement) {
+                // Insert the span when we reach that part of the text
+                const beforeSpan = currentText.substring(0, currentText.indexOf(spanText));
+                const afterSpan = currentText.substring(currentText.indexOf(spanText) + spanText.length);
+                
+                element.innerHTML = `Hi, I'm <span class="highlight">${spanText}</span>${afterSpan}`;
+            } else {
+                // Just show the text as is
+                element.innerHTML = currentText;
+            }
+            
+            textIndex++;
+            setTimeout(type, speed);
         }
     }
+    
     type();
 }
 
