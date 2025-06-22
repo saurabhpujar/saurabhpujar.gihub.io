@@ -182,14 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Initialize hero title with proper highlighting (no animation)
-document.addEventListener('DOMContentLoaded', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        heroTitle.innerHTML = 'Hi, I\'m <span class="highlight">Saurabh Pujar</span>';
-    }
-});
-
 // Parallax effect for hero section
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
@@ -241,16 +233,6 @@ document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0) scale(1)';
     });
-});
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
 });
 
 // Back to top button
