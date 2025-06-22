@@ -183,48 +183,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Typing effect for hero title
-function typeWriter(element, html, speed = 100) {
-    // Parse the HTML structure
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
+function typeWriter(element, speed = 100) {
+    const text = "Hi, I'm Saurabh Pujar";
+    const highlightStart = 8; // "Hi, I'm " is 8 characters
+    const highlightEnd = 20;  // "Hi, I'm Saurabh Pujar" is 20 characters
     
-    // Get the text content and find the span
-    const spanElement = tempDiv.querySelector('.highlight');
-    const spanText = spanElement ? spanElement.textContent : '';
-    
-    // Get the text before and after the span
-    const fullText = tempDiv.textContent || tempDiv.innerText;
-    const beforeSpan = fullText.substring(0, fullText.indexOf(spanText));
-    const afterSpan = fullText.substring(fullText.indexOf(spanText) + spanText.length);
-    
-    // Clear the element
     element.innerHTML = '';
-    
     let currentIndex = 0;
-    const totalLength = fullText.length;
-    const spanStartIndex = fullText.indexOf(spanText);
-    const spanEndIndex = spanStartIndex + spanText.length;
     
     function type() {
-        if (currentIndex < totalLength) {
+        if (currentIndex < text.length) {
             currentIndex++;
             
-            // Build the HTML with proper highlighting
             let htmlContent = '';
-            
-            // Add text before the span
-            if (currentIndex <= spanStartIndex) {
-                htmlContent = fullText.substring(0, currentIndex);
-            } else {
-                htmlContent = beforeSpan;
-                
-                // Add the span text with highlighting
-                const spanTextTyped = fullText.substring(spanStartIndex, Math.min(currentIndex, spanEndIndex));
-                htmlContent += `<span class="highlight">${spanTextTyped}</span>`;
-                
-                // Add text after the span (if we've finished typing the span)
-                if (currentIndex > spanEndIndex) {
-                    htmlContent += fullText.substring(spanEndIndex, currentIndex);
+            for (let i = 0; i < currentIndex; i++) {
+                if (i >= highlightStart && i < highlightEnd) {
+                    // This is part of "Saurabh Pujar" - highlight it
+                    htmlContent += `<span class="highlight">${text[i]}</span>`;
+                } else {
+                    // Regular text
+                    htmlContent += text[i];
                 }
             }
             
@@ -240,9 +218,8 @@ function typeWriter(element, html, speed = 100) {
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        const originalHTML = heroTitle.innerHTML;
         setTimeout(() => {
-            typeWriter(heroTitle, originalHTML, 50);
+            typeWriter(heroTitle, 50);
         }, 500);
     }
 });
