@@ -196,13 +196,21 @@ function typeWriter(element, speed = 100) {
             currentIndex++;
             
             let htmlContent = '';
+            let inHighlight = false;
+            
             for (let i = 0; i < currentIndex; i++) {
-                if (i >= highlightStart && i < highlightEnd) {
-                    // This is part of "Saurabh Pujar" - highlight it
-                    htmlContent += `<span class="highlight">${text[i]}</span>`;
-                } else {
-                    // Regular text
-                    htmlContent += text[i];
+                if (i === highlightStart && !inHighlight) {
+                    // Start highlighting
+                    htmlContent += '<span class="highlight">';
+                    inHighlight = true;
+                }
+                
+                htmlContent += text[i];
+                
+                if (i === highlightEnd - 1 && inHighlight) {
+                    // End highlighting
+                    htmlContent += '</span>';
+                    inHighlight = false;
                 }
             }
             
