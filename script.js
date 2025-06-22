@@ -184,40 +184,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Typing effect for hero title
 function typeWriter(element, html, speed = 100) {
-    // Create a temporary element to parse the HTML
+    // Parse the HTML structure
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     
-    // Get the text content (without HTML tags)
-    const textContent = tempDiv.textContent || tempDiv.innerText;
-    
-    // Find the span element to preserve
-    const spanElement = element.querySelector('.highlight');
+    // Get the text content and find the span
+    const spanElement = tempDiv.querySelector('.highlight');
     const spanText = spanElement ? spanElement.textContent : '';
+    
+    // Get the text before and after the span
+    const fullText = tempDiv.textContent || tempDiv.innerText;
+    const beforeSpan = fullText.substring(0, fullText.indexOf(spanText));
+    const afterSpan = fullText.substring(fullText.indexOf(spanText) + spanText.length);
     
     // Clear the element
     element.innerHTML = '';
     
-    let currentText = '';
-    let textIndex = 0;
+    let currentIndex = 0;
+    const totalLength = fullText.length;
     
     function type() {
-        if (textIndex < textContent.length) {
-            currentText += textContent[textIndex];
+        if (currentIndex < totalLength) {
+            currentIndex++;
+            
+            // Calculate what should be visible
+            let visibleText = fullText.substring(0, currentIndex);
             
             // Check if we've reached the span text
-            if (currentText.includes(spanText) && spanElement) {
-                // Insert the span when we reach that part of the text
-                const beforeSpan = currentText.substring(0, currentText.indexOf(spanText));
-                const afterSpan = currentText.substring(currentText.indexOf(spanText) + spanText.length);
+            if (visibleText.includes(spanText)) {
+                const beforeSpanVisible = visibleText.substring(0, visibleText.indexOf(spanText));
+                const spanVisible = visibleText.substring(visibleText.indexOf(spanText), visibleText.indexOf(spanText) + spanText.length);
+                const afterSpanVisible = visibleText.substring(visibleText.indexOf(spanText) + spanText.length);
                 
-                element.innerHTML = `Hi, I'm <span class="highlight">${spanText}</span>${afterSpan}`;
+                element.innerHTML = `${beforeSpanVisible}<span class="highlight">${spanVisible}</span>${afterSpanVisible}`;
             } else {
-                // Just show the text as is
-                element.innerHTML = currentText;
+                element.innerHTML = visibleText;
             }
             
-            textIndex++;
             setTimeout(type, speed);
         }
     }
@@ -229,11 +232,10 @@ function typeWriter(element, html, speed = 100) {
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        // Temporarily disable typing effect to preserve HTML styling
-        // const originalHTML = heroTitle.innerHTML;
-        // setTimeout(() => {
-        //     typeWriter(heroTitle, originalHTML, 50);
-        // }, 500);
+        const originalHTML = heroTitle.innerHTML;
+        setTimeout(() => {
+            typeWriter(heroTitle, originalHTML, 50);
+        }, 500);
     }
 });
 
