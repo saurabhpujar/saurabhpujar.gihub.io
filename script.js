@@ -182,53 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Typing effect for hero title
-function typeWriter(element, speed = 100) {
-    const text = "Hi, I'm Saurabh Pujar";
-    const highlightStart = 8; // "Hi, I'm " is 8 characters
-    const highlightEnd = 20;  // "Hi, I'm Saurabh Pujar" is 20 characters
-    
-    element.innerHTML = '';
-    let currentIndex = 0;
-    
-    function type() {
-        if (currentIndex < text.length) {
-            currentIndex++;
-            
-            let htmlContent = '';
-            let inHighlight = false;
-            
-            for (let i = 0; i < currentIndex; i++) {
-                if (i === highlightStart && !inHighlight) {
-                    // Start highlighting
-                    htmlContent += '<span class="highlight">';
-                    inHighlight = true;
-                }
-                
-                htmlContent += text[i];
-                
-                if (i === highlightEnd - 1 && inHighlight) {
-                    // End highlighting
-                    htmlContent += '</span>';
-                    inHighlight = false;
-                }
-            }
-            
-            element.innerHTML = htmlContent;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Initialize typing effect when page loads
+// Initialize hero title with proper highlighting (no animation)
 document.addEventListener('DOMContentLoaded', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
-        setTimeout(() => {
-            typeWriter(heroTitle, 50);
-        }, 500);
+        heroTitle.innerHTML = 'Hi, I\'m <span class="highlight">Saurabh Pujar</span>';
     }
 });
 
