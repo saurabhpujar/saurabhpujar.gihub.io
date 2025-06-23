@@ -841,4 +841,38 @@ html {
     color: #374151;
     font-size: 1.05rem;
     line-height: 1.6;
+}
+
+.about-updates-flex {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+}
+
+.about-flex, .updates-flex {
+    flex: 1 1 0;
+    min-width: 320px;
+    max-width: 600px;
+}
+
+.updates-flex {
+    background: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    padding: 2rem 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .about-updates-flex {
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 40px;
+    }
+    .about-flex, .updates-flex {
+        max-width: 100%;
+    }
 } 
