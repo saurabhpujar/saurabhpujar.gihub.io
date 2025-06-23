@@ -854,8 +854,8 @@ html {
 
 .about-flex, .updates-flex {
     flex: 1 1 0;
-    min-width: 320px;
-    max-width: 600px;
+    min-width: 0;
+    /* max-width: 600px; */
     display: flex;
     flex-direction: column;
 }
