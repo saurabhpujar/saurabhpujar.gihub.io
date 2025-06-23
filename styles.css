@@ -843,7 +843,7 @@ html {
     line-height: 1.6;
 }
 
-.about-updates-flex {
+.container.about-updates-flex {
     display: flex;
     gap: 3rem;
     justify-content: center;
@@ -867,7 +867,7 @@ html {
 }
 
 @media (max-width: 900px) {
-    .about-updates-flex {
+    .container.about-updates-flex {
         flex-direction: column;
         gap: 2rem;
         margin-bottom: 40px;
