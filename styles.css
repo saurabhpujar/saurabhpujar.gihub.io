@@ -884,6 +884,19 @@ html {
     line-height: 1.6;
 }
 
+.update-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.update-link:hover {
+    color: #1d4ed8;
+    border-bottom-color: #1d4ed8;
+}
+
 .about-updates-flex {
     display: flex;
     gap: 3rem;
